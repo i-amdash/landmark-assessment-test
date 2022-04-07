@@ -1,6 +1,8 @@
 import React, {Fragment, useState} from 'react';
 import { nanoid } from 'nanoid';
 
+
+// Locally imported extensions
 import EditRow from './components/EditRow';
 import ReadOnlyRow from './components/ReadOnlyRow';
 import data from './mock-data.json';
@@ -8,6 +10,8 @@ import './App.scss';
 
 const App = () => {
   
+  // useState Hooks 
+
   const [info, setInfo] = useState(data);
   const [addFormData, setAddFormData] = useState({
     title: "",
@@ -24,6 +28,8 @@ const App = () => {
   });
   
   const [editInfoId, setEditInfoId] = useState(null);
+
+  // My Add Data to table functions section
   
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -51,6 +57,8 @@ const App = () => {
     const newInfos = [...info, newInfo];
     setInfo(newInfos);
   };
+
+  // My Edit Data functions section
   
   const handleEditFormChange = (event) => {
     event.preventDefault();
@@ -100,10 +108,13 @@ const App = () => {
       setEditFormData(formValues);
   };
 
+
+// function for cancel in edit 
   const handleCancelClick = () => {
     setEditInfoId(null);
   };
-
+  
+  // function for delete
   const handleDeleteClick = (infosId) => {
     const newInfos = [...info];
 
@@ -115,7 +126,7 @@ const App = () => {
   }
 
 
-
+// My Rendered component
   return (
     <div className='app'>
 
@@ -205,7 +216,7 @@ const App = () => {
           </table>
         </form>
                   
-        <a href='appForm'> 
+        <a href='https://i-amdash.github.io/landmark-assessment-test/'> 
         <input type="submit" name="" id="" value="Return to Form" class="button"/>
  
          </a>
