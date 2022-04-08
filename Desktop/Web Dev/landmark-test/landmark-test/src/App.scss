@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: url(https://www.landmarkafrica.com/img/properties/LMT/LMT4.jpg), linear-gradient(#9370DB, #9370DB) no-repeat;
+    background: url(https://www.landmarkafrica.com/img/properties/LMT/LMT4.jpg), linear-gradient(#262D60, #262D60) no-repeat;
     background-size: cover;
     background-position: center;
     background-blend-mode: multiply;
@@ -21,7 +21,7 @@
     color: #808080;
     
     span {
-        color:  #1b284f;
+        color: #262D60;
     }
 
     @media screen and (min-width: 2000px) {
@@ -38,7 +38,7 @@
     font-size: 2.3rem;
     font-weight: 800;
     text-align: center;
-    color: black;
+    color: white;
     
 
     @media screen and (min-width: 2000px) {
@@ -57,7 +57,7 @@
     padding: 40px;
     flex-direction: column;
     margin: 1rem 2rem;
-    background: #9370DB;
+    background: #ff8300;
 
     @media screen and (max-width: 550px) {
         width: 100%;
@@ -80,7 +80,7 @@
             padding: 5px 0;
             font-size: 16px;
             margin: 10px 0;
-            background: #9370DB;
+            background: #ff8300;
             border: none;
             border-bottom: 2px solid black;
             outline: none;
@@ -108,9 +108,9 @@
 }
 
 button {
-    height: 3.5rem;
-    width: 15rem;
-    background: #8B008B;
+    height: 3rem;
+    width: 6rem;
+    background: #262D60;
     color: white;
     font-size: 1rem;
     text-transform: capitalize;
@@ -124,7 +124,7 @@ button {
     
 
     @media screen and (max-width: 450px) {
-        height: 1.2rem;
+        height: 2rem;
         width: 2.6rem;
         font-size: 0.6rem;
         border-radius: 15px;
@@ -162,7 +162,7 @@ tr {
     text-align: left;
     line-height: 1.5;
     color: black;
-    background-color: #9370DB;
+    background-color: #ff8300;
 
     @media screen and (min-width: 2000px) {
         font-size: 1.75rem;
@@ -179,9 +179,9 @@ th {
     font-family: var(--font-base);
     font-size: 1.2rem;
     font-weight: 800;
-    color: black;
+    color: white;
     text-align: left;
-    background-color: #8B008B;
+    background-color: #262D60;
 
     @media screen and (min-width: 2000px) {
         font-size: 2rem;;
@@ -196,7 +196,7 @@ th {
 .button {
     height: 3.5rem;
     width: 15rem;
-    background: #8B008B;
+    background: #262D60;
     color: white;
     font-size: 1rem;
     text-transform: capitalize;
@@ -211,7 +211,7 @@ th {
 .buttons {
     height: 3.5rem;
     width: 100%;
-    background: #8B008B;
+    background:#262D60;
     color: white;
     font-size: 1rem;
     border-radius: 5rem;

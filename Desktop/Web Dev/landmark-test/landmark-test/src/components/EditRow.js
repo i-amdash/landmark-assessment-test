@@ -11,43 +11,43 @@ const EditRow = ({
         <td>
             <input 
                 type="text"
-                name="title"
+                name="name"
                 required="required"
-                placeholder='Insert Title...'
-                value={editFormData.title}
+                placeholder='Full Name'
+                value={editFormData.name}
                 onChange={handleEditFormChange}
                  />
         </td>
 
         <td>
             <input 
-                type="text"
-                name="category"
+                type="tel"
+                name="number"
                 required="required"
-                placeholder='Insert Category...'
-                value={editFormData.category}
+                placeholder='Phone Number'
+                value={editFormData.number}
                 onChange={handleEditFormChange}
                  />
         </td>
 
         <td>
             <input 
-                type="text"
-                name="description"
+                type="email"
+                name="email"
                 required="required"
-                placeholder='Insert Description...'
-                value={editFormData.description}
+                placeholder='Email Address'
+                value={editFormData.email}
                 onChange={handleEditFormChange}
                  />
         </td>
 
         <td>
             <input 
-                type="text"
-                name="imageUrl"
+                type="file"
+                name="image"
                 required="required"
-                placeholder='Insert Image Url...'
-                value={editFormData.imageUrl}
+                accept='image/*'
+                value={editFormData.image}
                 onChange={handleEditFormChange}
                  />
         </td>

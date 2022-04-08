@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import { nanoid } from 'nanoid';
+import Axios from 'axios';
 
 
 // Locally imported extensions
@@ -11,23 +12,25 @@ import './App.scss';
 const App = () => {
   
   // useState Hooks 
-
+//  i stored my json data in the info state for the pre-existing data
   const [info, setInfo] = useState(data);
   const [addFormData, setAddFormData] = useState({
-    title: "",
-    category: "",
-    description: "",
-    imageUrl: "",
+    name: "",
+    number: "",
+    email: "",
+    image: "",
   });
   
   const [editFormData, setEditFormData] = useState({
-    title: "",
-    category: "",
-    description: "",
-    imageUrl: "",
+    name: "",
+    number: "",
+    email: "",
+    image: "",
   });
   
   const [editInfoId, setEditInfoId] = useState(null);
+
+  const [switchPage, setSwitchPage] = useState(false);
 
   // My Add Data to table functions section
   
@@ -36,7 +39,6 @@ const App = () => {
 
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
-
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
 
@@ -48,14 +50,25 @@ const App = () => {
 
     const newInfo = {
       id: nanoid(),
-      title: addFormData.title,
-      category: addFormData.category,
-      description: addFormData.description,
-      imageUrl: addFormData.imageUrl
+      name: addFormData.name,
+      number: addFormData.number,
+      email: addFormData.email,
+      image: addFormData.image
     };
 
     const newInfos = [...info, newInfo];
     setInfo(newInfos);
+  };
+
+  const uploadImage = (files) => {
+    const formData = new FormData()
+    formData.append("file", files[0])
+    formData.append("upload_preset", "zpyoxoxd")
+
+    Axios.post("https://api.cloudinary.com/v1_1/du6gwwr9h/image/upload", formData)
+    .then((response) => {
+      console.log(response)
+    })
   };
 
   // My Edit Data functions section
@@ -77,10 +90,10 @@ const App = () => {
 
     const editedInfo = {
       id: editInfoId,
-      title: editFormData.title,
-      category: editFormData.category,
-      description: editFormData.description,
-      imageUrl: editFormData.imageUrl,
+      name: editFormData.name,
+      number: editFormData.number,
+      email: editFormData.email,
+      image: editFormData.image,
     };
 
     const newInfos = [...info];
@@ -99,10 +112,10 @@ const App = () => {
       setEditInfoId(infos.id);
 
       const formValues = {
-        title: infos.title,
-        category: infos.category,
-        description: infos.description,
-        imageUrl: infos.imageUrl,
+        name: infos.name,
+        number: infos.number,
+        email: infos.email,
+        image: infos.image,
       };
 
       setEditFormData(formValues);
@@ -125,14 +138,25 @@ const App = () => {
     setInfo(newInfos);
   }
 
+  // funtion for switching the pages
+
+  const handleSwitch = (e) => {
+      
+    if (switchPage === false) {
+
+      setSwitchPage(true);
+    } else {
+      setSwitchPage(false);
+    }
+  }
+
 
 // My Rendered component
   return (
     <div className='app'>
-
+{!switchPage ? (
       <div className='appForm' id="appForm">
-
-      <h1 className='head-text'>Landmark Assessment Test</h1>
+      <h1 className='head-text'><span>Landmark</span> Assessment Test</h1>
       <h2 className='sub-head'>Form page</h2>
 
         <div className='form-bg'>
@@ -141,56 +165,59 @@ const App = () => {
                 <div className='inputBox'>
                   <input 
                   type="text"
-                  name="title"
+                  name="name"
                   required="required"
-                  placeholder='Title...'
+                  placeholder='Full Name'
                   onChange={handleAddFormChange}
                   />
                 </div>
 
                 <div className='inputBox'>
                   <input 
-                  type="text"
-                  name="category"
+                  type="tel"
+                  name="number"
                   required="required"
-                  placeholder='Category...'
+                  placeholder='Phone Number'
                   onChange={handleAddFormChange}
                   />
                 </div>
 
                 <div className='inputBox'>
                   <input 
-                  type="text"
-                  name="description"
+                  type="email"
+                  name="email"
                   required="required"
-                  placeholder='Description...'
+                  placeholder='Email Address'
                   onChange={handleAddFormChange}
                   />
                 </div>
 
                 <div className='inputBox'>
                   <input 
-                  type="imgurl"
-                  name="imageUrl"
+                  type="file"
+                  name="image"
                   required="required"
-                  placeholder='Image Url...'
+                  accept='image/*'
                   onChange={handleAddFormChange}
                   />
                 </div>
-                <input type="submit" name="" id="" value="Add data" class="buttons"/>
+                <input type="submit" onChange={uploadImage} name="" id="" value="Add data" class="buttons"/>
           </form>
         </div>
+        <button type='button' onClick={handleSwitch}>Switch Page</button>
       </div>
+      
+      ) : (
 
       <div className='appTable'>
         <form onSubmit={handleEditFormSubmit}>
           <table>
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>ImageUrl</th>
+                <th>Full Name</th>
+                <th>Phone Number</th>
+                <th>Email Address</th>
+                <th>Picture</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -214,15 +241,11 @@ const App = () => {
               ))}
             </tbody>
           </table>
-        </form>
-                  
-        <a href='https://i-amdash.github.io/landmark-assessment-test/'> 
-        <input type="submit" name="" id="" value="Return to Form" class="button"/>
- 
-         </a>
+        </form>       
+        <button type='button' onClick={handleSwitch}>Switch Page</button>
       </div>
-
-    </div>
+    )}
+</div>
   );
 }
 
