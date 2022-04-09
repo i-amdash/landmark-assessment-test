@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/landmark-assessment-test/static/css/main.6f893cc1.css",
-    "main.js": "/landmark-assessment-test/static/js/main.c9f87073.js",
+    "main.css": "/landmark-assessment-test/static/css/main.f6d8339d.css",
+    "main.js": "/landmark-assessment-test/static/js/main.68d4dff9.js",
     "index.html": "/landmark-assessment-test/index.html",
-    "main.6f893cc1.css.map": "/landmark-assessment-test/static/css/main.6f893cc1.css.map",
-    "main.c9f87073.js.map": "/landmark-assessment-test/static/js/main.c9f87073.js.map"
+    "main.f6d8339d.css.map": "/landmark-assessment-test/static/css/main.f6d8339d.css.map",
+    "main.68d4dff9.js.map": "/landmark-assessment-test/static/js/main.68d4dff9.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f893cc1.css",
-    "static/js/main.c9f87073.js"
+    "static/css/main.f6d8339d.css",
+    "static/js/main.68d4dff9.js"
   ]
 }
