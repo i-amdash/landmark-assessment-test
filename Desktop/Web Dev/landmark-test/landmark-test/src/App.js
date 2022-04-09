@@ -1,6 +1,5 @@
 import React, {Fragment, useState} from 'react';
 import { nanoid } from 'nanoid';
-import Axios from 'axios';
 
 
 // Locally imported extensions
@@ -11,8 +10,11 @@ import './App.scss';
 
 const App = () => {
   
+  // (<img src={image} style={{ width: '400px' }} alt='' />)
+
   // useState Hooks 
-//  i stored my json data in the info state for the pre-existing data
+  //  i stored my json data in the info state for the mock data
+  const [image, setImage] = useState('');
   const [info, setInfo] = useState(data);
   const [addFormData, setAddFormData] = useState({
     name: "",
@@ -31,12 +33,27 @@ const App = () => {
   const [editInfoId, setEditInfoId] = useState(null);
 
   const [switchPage, setSwitchPage] = useState(false);
-
+  
   // My Add Data to table functions section
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+    
+    const newInfo = {
+      id: nanoid(),
+      name: addFormData.name,
+      number: addFormData.number,
+      email: addFormData.email,
+      image: image
+    };
+    
+    const newInfos = [...info, newInfo];
+    setInfo(newInfos);
+  };
+  
   
   const handleAddFormChange = (event) => {
     event.preventDefault();
-
+    
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
     const newFormData = {...addFormData};
@@ -45,49 +62,29 @@ const App = () => {
     setAddFormData(newFormData);
   };
   
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
+  const uploadImage = async e => {
+    const files = e.target.files
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('upload_preset', 'zpyoxoxd')
 
-    const newInfo = {
-      id: nanoid(),
-      name: addFormData.name,
-      number: addFormData.number,
-      email: addFormData.email,
-      image: addFormData.image
-    };
-
-    const newInfos = [...info, newInfo];
-    setInfo(newInfos);
-  };
-
-  const uploadImage = (files) => {
-    const formData = new FormData()
-    formData.append("file", files[0])
-    formData.append("upload_preset", "zpyoxoxd")
-
-    Axios.post("https://api.cloudinary.com/v1_1/du6gwwr9h/image/upload", formData)
-    .then((response) => {
-      console.log(response)
-    })
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/du6gwwr9h/image/upload', 
+      {
+        method: 'POST',
+        body: data
+      })
+      
+    const file = await res.json()
+    
+    setImage(file.secure_url);
   };
 
   // My Edit Data functions section
   
-  const handleEditFormChange = (event) => {
-    event.preventDefault();
-
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...editFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setEditFormData(newFormData);
-  };
-
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
-
+    
     const editedInfo = {
       id: editInfoId,
       name: editFormData.name,
@@ -95,34 +92,46 @@ const App = () => {
       email: editFormData.email,
       image: editFormData.image,
     };
-
+    
     const newInfos = [...info];
-
+    
     const index = info.findIndex((infos) => infos.id === editInfoId);
-
+    
     newInfos[index] = editedInfo;
 
     setInfo(newInfos);
     setEditInfoId(null);
-
+    
   };
-
+  
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+    
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.files[0] ? image : event.value;
+    
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+    
+    setEditFormData(newFormData);
+  };
+  
   const handleEditClick = (event, infos) => {
-      event.preventDefault();
-      setEditInfoId(infos.id);
+    event.preventDefault();
+    setEditInfoId(infos.id);
 
-      const formValues = {
-        name: infos.name,
-        number: infos.number,
-        email: infos.email,
-        image: infos.image,
-      };
+    const formValues = {
+      name: infos.name,
+      number: infos.number,
+      email: infos.email,
+      image: infos.image,
+    };
 
-      setEditFormData(formValues);
+    setEditFormData(formValues);
   };
-
-
-// function for cancel in edit 
+  
+  
+  // function for cancel in edit 
   const handleCancelClick = () => {
     setEditInfoId(null);
   };
@@ -140,7 +149,7 @@ const App = () => {
 
   // funtion for switching the pages
 
-  const handleSwitch = (e) => {
+  const handleSwitch = () => {
       
     if (switchPage === false) {
 
@@ -151,6 +160,17 @@ const App = () => {
   }
 
 
+  // function to handle image upload onChange
+  const handleImageUpload = (event) => {
+    handleAddFormChange(event);
+    uploadImage(event);
+  }
+
+  // function to handle image edit onChange
+  const handleImageEdit = (event) => {
+    handleEditFormChange(event);
+    uploadImage(event);
+  }
 // My Rendered component
   return (
     <div className='app'>
@@ -198,10 +218,10 @@ const App = () => {
                   name="image"
                   required="required"
                   accept='image/*'
-                  onChange={handleAddFormChange}
+                  onChange={handleImageUpload}
                   />
                 </div>
-                <input type="submit" onChange={uploadImage} name="" id="" value="Add data" class="buttons"/>
+                <input type="submit" name="" id="" value="Add data" class="buttons"/>
           </form>
         </div>
         <button type='button' onClick={handleSwitch}>Switch Page</button>
@@ -228,6 +248,7 @@ const App = () => {
                     <EditRow 
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
+                    handleImageEdit={handleImageEdit}
                     handleCancelClick={handleCancelClick}
                     />
                   ) : (
